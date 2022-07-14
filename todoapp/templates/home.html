@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <title>Home</title>
+</head>
+
+<body>
+    <div class="box">
+        <div class="top">
+            <p>
+                Wellcome {{ data.user.name }},
+            </p>
+            <a href="{% url 'logout'%}">
+                <p class="logut" style="font-size: 20px;">&#128682; Logout</p>
+            </a>
+        </div>
+        <div class="search">
+            <form action="/additem/" method="post">
+                {% csrf_token %}
+                <input type="text" name="item" id="item" placeholder="Add item"
+                    style="width:60%; height :40px; padding: 0; padding-left: 10px;">
+
+                <input type="submit" value="+" class="searchbtn">
+
+            </form>
+        </div>
+        <div class="bottom">
+            {% for item in data.items %}
+
+            <div class="items">
+                <div> {{ item.item }}</div>
+                <div class="delitem">
+                    <a href="/deleteitem/{{item.item}}/{{item.email}}/" style="text-decoration: none;">
+                        ❌
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="itemsno">
+                NO DATA</div>
+            {% endfor %}
+
+        </div>
+        <div class="total">
+            <div style="margin-left: 20px;">Pending tasks : {{data.total}}</div>
+            <a href="/clearall/" style="text-decoration: none;">
+                <div class="clear"> clear all</div>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

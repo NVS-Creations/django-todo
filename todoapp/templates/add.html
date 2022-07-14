@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add item</title>
+    <link rel="stylesheet" href="{% static 'additem.css' %}">
+</head>
+
+<body>
+    <div class="box">
+        <div class="topic">
+            <h1>Add Item</h1>
+        </div>
+        <form action="/additem/" method="post">
+            {% csrf_token %}
+            <input type="text" name="item" id="item" placeholder="Item">
+            <input type="text" name="description" id="description" placeholder="description">
+            {% if messages %}
+            {% for message in messages %}
+
+            <div class="{{ message.tags }}" style="color: red; font-size: 20px;">{{message}}</div>
+
+            {% endfor %}
+            {% endif %}
+            <input type="submit" value="Add" style="background-color: orange; outline-width: none;">
+        </form>
+    </div>
+</body>
+
+</html>
